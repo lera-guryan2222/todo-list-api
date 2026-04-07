@@ -4,27 +4,38 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Виртуальное окружение
 env/
 venv/
-*.log
+.venv/
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # Docker
 *.pid
 *.pid.lock
 
-# Environment
+# Переменные окружения (пароли!)
 .env
 *.env
+!.env.example
 
-# PostgreSQL data - НЕ ЗАЛИВАЙ ЭТО В GITHUB!
+# Данные БД (volume на хосте)
 postgres_data/
 pgdata/
-*.sql
-*.db
+
+# Логи
+*.log
 
 # OS
 .DS_Store
