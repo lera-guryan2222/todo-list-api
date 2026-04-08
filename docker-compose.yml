@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:15-alpine
+    build: ./db           
     container_name: todo-postgres
     environment:
       POSTGRES_DB: ${DB_NAME:-todo_db}
