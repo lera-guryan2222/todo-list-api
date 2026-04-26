@@ -40,4 +40,7 @@ curl -X 'DELETE' 'http://localhost:8000/tasks/2' -H 'accept: application/json'
 git clone <repository-url>
 cd todo-app
 
-
+## Локальный запуск
+```bash
+docker-compose up -d --build
+curl http://localhost:8000/health/

@@ -1,34 +1,31 @@
-from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional
-from enum import Enum
 
-class PriorityEnum(str, Enum):
-    LOW = "low"
-    MEDIUM = "medium"
-    HIGH = "high"
+from pydantic import BaseModel, Field
+
 
 class TaskBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=200)
-    description: Optional[str] = None
-    priority: PriorityEnum = PriorityEnum.MEDIUM
-    due_date: Optional[datetime] = None
+    description: str | None = None
+    priority: str = Field("medium", pattern="^(low|medium|high)$")
+    due_date: datetime | None = None
+
 
 class TaskCreate(TaskBase):
     pass
 
+
 class TaskUpdate(BaseModel):
-    title: Optional[str] = Field(None, min_length=1, max_length=200)
-    description: Optional[str] = None
-    priority: Optional[PriorityEnum] = None
-    completed: Optional[bool] = None
-    due_date: Optional[datetime] = None
+    title: str | None = Field(None, min_length=1, max_length=200)
+    description: str | None = None
+    priority: str | None = None
+    completed: bool | None = None
+    due_date: datetime | None = None
+
 
 class Task(TaskBase):
     id: int
     completed: bool
     created_at: datetime
-    updated_at: Optional[datetime] = None
+    updated_at: datetime | None = None
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
