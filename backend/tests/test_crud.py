@@ -1,13 +1,16 @@
-from app import crud, schemas
-from app.database import Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from app.database import Base
+from app import crud, schemas
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={"check_same_thread": False}
 )
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+TestingSessionLocal = sessionmaker(
+    autocommit=False, autoflush=False, bind=engine
+)
 
 
 class TestCRUD:
@@ -20,7 +23,9 @@ class TestCRUD:
     def test_create_task(self):
         db = TestingSessionLocal()
         task_data = schemas.TaskCreate(
-            title="Test CRUD Task", description="CRUD Test", priority="high"
+            title="Test CRUD Task",
+            description="CRUD Test",
+            priority="high"
         )
         task = crud.TaskCRUD.create_task(db, task_data)
         assert task.id is not None

@@ -1,15 +1,18 @@
+import pytest
+from fastapi.testclient import TestClient
+
 from app.database import Base, engine
 from app.main import app
-from fastapi.testclient import TestClient
+
+
+@pytest.fixture(scope="module", autouse=True)
+def setup_database():
+    Base.metadata.create_all(bind=engine)
+    yield
+    Base.metadata.drop_all(bind=engine)
 
 
 class TestTasksAPI:
-    def setup_method(self):
-        Base.metadata.create_all(bind=engine)
-
-    def teardown_method(self):
-        Base.metadata.drop_all(bind=engine)
-
     def test_create_task(self):
         client = TestClient(app)
         response = client.post(
