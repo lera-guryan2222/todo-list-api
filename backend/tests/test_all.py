@@ -3,9 +3,9 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from app import crud, schemas
 from app.database import Base
 from app.main import app
-from app import crud, schemas
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 engine = create_engine(
@@ -67,6 +67,7 @@ class TestTasksAPI:
         assert "id" in data
 
     def test_get_tasks(self):
+
         client.post("/tasks/", json={"title": "Task 1"})
         client.post("/tasks/", json={"title": "Task 2"})
 
@@ -76,6 +77,7 @@ class TestTasksAPI:
         assert len(response.json()) == 2
 
     def test_get_task_by_id(self):
+
         create_response = client.post("/tasks/", json={"title": "Get Test"})
         task_id = create_response.json()["id"]
 
@@ -159,4 +161,3 @@ class TestCRUD:
         result = crud.TaskCRUD.delete_task(db_session, 99999)
         assert result is False
         
-
