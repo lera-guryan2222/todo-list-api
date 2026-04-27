@@ -36,7 +36,6 @@ def db_session():
 
 
 class TestTasksAPI:
-
     def test_root(self):
         response = client.get("/")
         assert response.status_code == 200
@@ -100,7 +99,6 @@ class TestTasksAPI:
 
 
 class TestCRUD:
-
     def test_create_task(self, db_session):
         task_data = schemas.TaskCreate(
             title="Test CRUD Task",
