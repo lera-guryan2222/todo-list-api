@@ -1,6 +1,6 @@
-from fastapi.testclient import TestClient
+from app.database import Base, engine
 from app.main import app
-from app.database import engine, Base
+from fastapi.testclient import TestClient
 
 Base.metadata.create_all(bind=engine)
 
