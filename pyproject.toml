@@ -16,6 +16,3 @@ testpaths = ["backend/tests"]
 asyncio_mode = "auto"
 pythonpath = ["backend"]  
 addopts = "--cov=app --cov-report=term --cov-report=html --cov-fail-under=50"
-env = [
-    "TESTING=True"
-]
