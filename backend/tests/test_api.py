@@ -1,24 +1,25 @@
-from fastapi.testclient import TestClient
 from app.database import Base, engine
 from app.main import app
+from fastapi.testclient import TestClient
 
 
 class TestTasksAPI:
     def setup_method(self):
-        """Создаем таблицы перед каждым тестом"""
         Base.metadata.create_all(bind=engine)
 
     def teardown_method(self):
-        """Удаляем таблицы после каждого теста"""
         Base.metadata.drop_all(bind=engine)
 
     def test_create_task(self):
         client = TestClient(app)
-        response = client.post("/tasks/", json={
-            "title": "Test Task",
-            "description": "Test Description",
-            "priority": "high"
-        })
+        response = client.post(
+            "/tasks/",
+            json={
+                "title": "Test Task",
+                "description": "Test Description",
+                "priority": "high",
+            },
+        )
         assert response.status_code == 201
         data = response.json()
         assert data["title"] == "Test Task"
