@@ -1,17 +1,12 @@
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-os.environ["TESTING"] = "True"
-
-import pytest
+from app import crud, schemas
+from app.database import Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.database import Base
-from app import models, schemas, crud
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
@@ -21,14 +16,11 @@ class TestCRUD:
 
     def teardown_method(self):
         Base.metadata.drop_all(bind=engine)
-        # Не нужно удалять test.db - его нет!
 
     def test_create_task(self):
         db = TestingSessionLocal()
         task_data = schemas.TaskCreate(
-            title="Test CRUD Task",
-            description="CRUD Test",
-            priority="high"
+            title="Test CRUD Task", description="CRUD Test", priority="high"
         )
         task = crud.TaskCRUD.create_task(db, task_data)
         assert task.id is not None

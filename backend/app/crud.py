@@ -1,8 +1,9 @@
 from sqlalchemy.orm import Session
+
 from . import models, schemas
 
 
-class TaskCRUD:  
+class TaskCRUD:
     @staticmethod
     def get_task(db: Session, task_id: int) -> models.Task | None:
         return db.query(models.Task).filter(models.Task.id == task_id).first()

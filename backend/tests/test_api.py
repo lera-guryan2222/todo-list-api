@@ -1,22 +1,19 @@
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-os.environ["TESTING"] = "True"
-
-from fastapi.testclient import TestClient
 from app.main import app
+from fastapi.testclient import TestClient
 
 client = TestClient(app)
 
 
 class TestTasksAPI:
     def test_create_task(self):
-        response = client.post("/tasks/", json={
-            "title": "Test Task",
-            "description": "Test Description",
-            "priority": "high"
-        })
+        response = client.post(
+            "/tasks/",
+            json={
+                "title": "Test Task",
+                "description": "Test Description",
+                "priority": "high",
+            },
+        )
         assert response.status_code == 201
         data = response.json()
         assert data["title"] == "Test Task"

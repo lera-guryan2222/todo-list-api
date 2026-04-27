@@ -4,22 +4,18 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = [
-    "E",   # pycodestyle errors
-    "W",   # pycodestyle warnings
-    "F",   # pyflakes
-    "I",   # isort
-    "C",   # complexity
-    "B",   # flake8-bugbear
-    "UP",  # pyupgrade
+    "E", "W", "F", "I", "C", "B", "UP"
 ]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
+"tests/**/*.py" = ["E402"]  # Игнорируем E402 в тестах
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]
 asyncio_mode = "auto"
-addopts = "--cov=backend.app --cov-report=term --cov-report=html --cov-fail-under=50"
+pythonpath = ["backend"]  # ← ВАЖНО! Добавляет backend в путь
+addopts = "--cov=app --cov-report=term --cov-report=html --cov-fail-under=50"
 
 [tool.mypy]
 ignore_missing_imports = true
