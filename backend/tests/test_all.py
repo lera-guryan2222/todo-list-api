@@ -160,4 +160,3 @@ class TestCRUD:
     def test_delete_nonexistent_task(self, db_session):
         result = crud.TaskCRUD.delete_task(db_session, 99999)
         assert result is False
-        
