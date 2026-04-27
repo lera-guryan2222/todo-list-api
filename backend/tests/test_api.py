@@ -59,3 +59,4 @@ class TestTasksAPI:
         client = TestClient(app)
         response = client.get("/tasks/99999")
         assert response.status_code == 404
+        

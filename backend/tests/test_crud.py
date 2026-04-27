@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from app.database import Base
 from app import crud, schemas
 
@@ -65,3 +66,4 @@ class TestCRUD:
         deleted = crud.TaskCRUD.get_task(db, created.id)
         assert deleted is None
         db.close()
+        
