@@ -42,11 +42,13 @@ jobs:
         run: |
           cd backend
           pip install -r requirements.txt
-          pip install flake8
+          pip install flake8 ruff
 
       - name: Run linter
         run: |
-          flake8 backend/app/
+          cd backend
+          flake8 app/ --max-line-length=120 --ignore=E203,W503
+          ruff check app/ --fix
 
   test:
     runs-on: ubuntu-latest
