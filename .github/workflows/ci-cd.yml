@@ -75,7 +75,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: htmlcov/
+          path: backend/htmlcov/
 
   docker_build:
     runs-on: ubuntu-latest
@@ -100,7 +100,6 @@ jobs:
       - name: Save Docker image to file
         run: |
           docker save ${{ env.DOCKER_IMAGE }}:${{ github.sha }} -o image.tar
-          docker save ${{ env.DOCKER_IMAGE }}:latest -o image-latest.tar
 
       - name: Upload Docker image artifact
         uses: actions/upload-artifact@v4
