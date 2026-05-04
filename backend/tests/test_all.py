@@ -9,7 +9,9 @@ from app.main import app
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
@@ -96,14 +98,10 @@ def test_delete_task():
 
 
 def test_create_task_invalid_priority():
-    response = client.post(
-        "/tasks/",
-        json={"title": "Test", "priority": "invalid"}
-    )
+    response = client.post("/tasks/", json={"title": "Test", "priority": "invalid"})
     assert response.status_code == 422
 
 
 def test_create_task_empty_title():
     response = client.post("/tasks/", json={"title": ""})
     assert response.status_code == 422
-    
